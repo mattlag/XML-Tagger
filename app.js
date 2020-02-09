@@ -12,56 +12,62 @@ function load() {
 function makeNode(thisNode) {
 	// console.log(`makeNode ${thisNode.nodeName}`);
 	let node = document.createElement('div');
-	node.setAttribute('class', 'node');
+	node.setAttribute('class', 'nodeWrapper');
 
 	// Node title, or just the content
-	let top;
-	let text;
+	let elem;
+	let content;
 
 	if(thisNode.nodeName === '#text'){
-		text = trim(thisNode.nodeValue);
-		if(text) {
-			top = document.createElement('div');
-			top.setAttribute('class', 'textContent');
-			top.append(text);
-			node.append(top);
+		content = trim(thisNode.nodeValue);
+		if(content) {
+			elem = document.createElement('div');
+			elem.setAttribute('class', 'textContent');
+			elem.append(content);
+			node.append(elem);
 		}
 		
 	} else if (thisNode.nodeName === '#comment'){
-		text = trim(thisNode.nodeValue);
-		if(text) {
-			top = document.createElement('div');
-			top.setAttribute('class', 'commentContent');
-			top.append(`<!-- ${text} -->`);
-			node.append(top);
+		content = trim(thisNode.nodeValue);
+		if(content) {
+			elem = document.createElement('div');
+			elem.setAttribute('class', 'commentContent');
+			elem.append(`<!-- ${content} -->`);
+			node.append(elem);
 			node.setAttribute('class', 'commentNode');
 		}
 
 	} else {
-		top = document.createElement('h1');
-		top.append(thisNode.nodeName);
-		node.append(top);
+		elem = document.createElement('div');
+		elem.setAttribute('class', 'nodeHeader');
+		elem.append(thisNode.nodeName);
+		
+		// Attributes
+		if(thisNode.attributes){
+			let attr;
+			for(let a=0; a<thisNode.attributes.length; a++){
+				attr = document.createElement('span');
+				attr.setAttribute('class', 'attributeContent');
+				attr.append(`${thisNode.attributes[a].name} = ${thisNode.attributes[a].value}`);
+				elem.append(attr);
+			}
+		}
+
+		node.append(elem);
 	}
 
-	// Attributes
-	if(thisNode.attributes){
-		let attr;
-		for(let a=0; a<thisNode.attributes.length; a++){
-			attr = document.createElement('span');
-			attr.setAttribute('class', 'attributeContent');
-			attr.append(`${thisNode.attributes[a].name} = ${thisNode.attributes[a].value}`);
-			node.append(attr);
-		}
-	}
-	
+	// Child nodes
+	content = document.createElement('div');
+	content.setAttribute('class', 'nodeContent');
+
 	let kids = thisNode.childNodes;
 	let kidNode;
 	for(let k=0; k<kids.length; k++){
 		kidNode = makeNode(kids[k]);
-		if(kidNode.innerHTML){
-			node.append(kidNode);
-		}
+		if(kidNode.innerHTML) content.append(kidNode);
 	}
+
+	if(content.innerHTML) node.append(content);
 
 	return node;
 }

@@ -19,11 +19,19 @@
 			box-sizing: border-box;
 		}
 
-		.node {
+		.nodeWrapper {
 			background-color: rgba(0, 0, 0, 0.05);
 			border-left: 1px solid black;
 			padding:2px 8px 2px var(--left-pad);
-			margin: 4px 0px 8px 0px;
+			margin: 4px 0px 4px 0px;
+		}
+
+		.nodeHeader {
+
+		}
+
+		.nodeContent {
+
 		}
 
 		.commentNode {
@@ -51,9 +59,9 @@
 			border: 1px solid rgba(255, 255, 255, 0.8);
 			border-radius: 3px;
 			font-size: 0.8em;
-			margin-right: var(--left-pad);
+			margin-left: var(--left-pad);
 			position: relative;
-			top: -2px;
+			top: -1px;
 		}
 
 		.node h1 {
