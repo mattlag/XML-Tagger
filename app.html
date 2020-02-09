@@ -8,6 +8,10 @@
 	<script src="app.js"></script>
 	<script src="testXML.js"></script>
 	<style>
+		:root {
+			--left-pad: 8px;
+		}
+
 		* {
 			margin: 0;
 			padding: 0;
@@ -16,8 +20,48 @@
 		}
 
 		.node {
-			background-color: rgba(0, 0, 0, 0.9);
+			background-color: rgba(0, 0, 0, 0.05);
 			border-left: 1px solid black;
+			padding:2px 8px 2px var(--left-pad);
+			margin: 4px 0px 8px 0px;
+		}
+
+		.commentNode {
+			background-color: transparent;
+			border-left: 1px solid transparent;
+			padding:2px 8px 2px 0px;
+			margin: 4px 0px 4px 0px;
+		}
+
+		.textContent {
+			font-family: monospace;
+			color: navy;
+		}
+
+		.commentContent {
+			font-style: italic;
+			font-size: 0.8em;
+			color: forestgreen;
+			background-color: transparent;
+		}
+
+		.attributeContent {
+			padding: 2px 4px;
+			background-color: rgba(255, 255, 255, 0.4);
+			border: 1px solid rgba(255, 255, 255, 0.8);
+			border-radius: 3px;
+			font-size: 0.8em;
+			margin-right: var(--left-pad);
+			position: relative;
+			top: -2px;
+		}
+
+		.node h1 {
+			font-weight: normal;
+			font-size: 1.2em;
+			margin-bottom: 4px;
+			margin-right: 12px;
+			display: inline-block;
 		}
 	</style>
 </head>

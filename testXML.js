@@ -1,4 +1,5 @@
-var testXML = `<?xml version="1.0" encoding="ISO-8859-1"?>
+var testXML = `
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <ttFont sfntVersion="OTTO" ttLibVersion="2.3">
 
   <GlyphOrder>
@@ -210,7 +211,7 @@ var testXML = `<?xml version="1.0" encoding="ISO-8859-1"?>
       regular
     </namerecord>
     <namerecord nameID="3" platformID="1" platEncID="0" langID="0x0">
-       :California Gothic regular
+       California Gothic regular
     </namerecord>
     <namerecord nameID="4" platformID="1" platEncID="0" langID="0x0">
       California Gothic regular
@@ -261,7 +262,7 @@ var testXML = `<?xml version="1.0" encoding="ISO-8859-1"?>
       regular
     </namerecord>
     <namerecord nameID="3" platformID="3" platEncID="1" langID="0x409">
-       :California Gothic regular
+       California Gothic regular
     </namerecord>
     <namerecord nameID="4" platformID="3" platEncID="1" langID="0x409">
       California Gothic regular
