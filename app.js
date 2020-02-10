@@ -1,15 +1,19 @@
-var XMLDocument;
+var UI = {
+	XMLDocument: '',
+	startDepth: 1
+};
+
 
 function load() {
-	XMLDocument = loadXMLDocument(trim(testXML));
-	console.log(XMLDocument);
+	UI.XMLDocument = loadXMLDocument(trim(testXML));
+	console.log(UI.XMLDocument);
 	let destination = document.getElementById('wrapper');
 
-	destination.append(makeNode(XMLDocument.documentElement));
+	destination.append(makeNode(UI.XMLDocument.documentElement));
 
 }
 
-function makeNode(thisNode) {
+function makeNode(thisNode, depth = 0) {
 	// console.log(`makeNode ${thisNode.nodeName}`);
 	let node = document.createElement('div');
 	node.setAttribute('class', 'nodeWrapper');
@@ -17,6 +21,7 @@ function makeNode(thisNode) {
 	// Node title, or just the content
 	let elem;
 	let content;
+	let toggler;
 
 	if(thisNode.nodeName === '#text'){
 		content = trim(thisNode.nodeValue);
@@ -40,6 +45,21 @@ function makeNode(thisNode) {
 	} else {
 		elem = document.createElement('div');
 		elem.setAttribute('class', 'nodeHeader');
+
+		if(thisNode.childNodes.length){
+			toggler = document.createElement('div');
+			toggler.setAttribute('class', 'toggler');
+			if(depth > UI.startDepth) {
+				toggler.append('⯈');
+				toggler.setAttribute('onclick', 'expand(this)');
+			} else {
+				toggler.append('⯆');
+				toggler.setAttribute('onclick', 'collapse(this)');
+			}
+
+			elem.append(toggler);
+		}
+		
 		elem.append(thisNode.nodeName);
 		
 		// Attributes
@@ -60,10 +80,12 @@ function makeNode(thisNode) {
 	content = document.createElement('div');
 	content.setAttribute('class', 'nodeContent');
 
+	if(depth > UI.startDepth) content.setAttribute('style', 'display:none;');
+
 	let kids = thisNode.childNodes;
 	let kidNode;
 	for(let k=0; k<kids.length; k++){
-		kidNode = makeNode(kids[k]);
+		kidNode = makeNode(kids[k], (depth+=1));
 		if(kidNode.innerHTML) content.append(kidNode);
 	}
 
@@ -103,4 +125,16 @@ function trim(text) {
 		text = text.replace(/^\s+|\s+$/g, '');
 		return text.replace(/(\r\n|\n|\r|\t)/gm,'');
 	} catch(e) { return ''; }
+}
+
+function expand(node){
+	node.parentNode.parentNode.childNodes[1].style.display = 'block';
+	node.innerHTML = '⯆';
+	node.setAttribute('onclick', 'collapse(this)');
+}
+
+function collapse(node){
+	node.parentNode.parentNode.childNodes[1].style.display = 'none';
+	node.innerHTML = '⯈';
+	node.setAttribute('onclick', 'expand(this)');
 }
