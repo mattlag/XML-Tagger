@@ -10,7 +10,6 @@
 	<style>
 		:root {
 			--left-pad: 8px;
-			--toggler-size: 14px;
 		}
 
 		* {
@@ -18,10 +17,6 @@
 			padding: 0;
 			font-family: sans-serif;
 			box-sizing: border-box;
-		}
-
-		#wrapper {
-			margin: var(--left-pad);
 		}
 
 		.nodeWrapper {
@@ -42,25 +37,17 @@
 		.toggler {
 			display: inline-block;
 			cursor: pointer;
-			width: var(--toggler-size);
-			height: var(--toggler-size);
+			height: 1.2em;
+			width: 1.2em;
 			border: 1px solid transparent;
 			border-radius: 4px;
+			color:rgba(0, 0, 0, 0.4);
 			margin-right: var(--left-pad);
 		}
 
-		.toggler svg {
-			width: var(--toggler-size);
-			height: var(--toggler-size);
-			fill:rgba(0, 0, 0, 0.4);
-		}
-
 		.toggler:hover {
+			color: black;
 			border-color: rgba(0, 0, 0, 0.2);
-		}
-
-		.toggler:hover svg {
-			fill: black;
 		}
 
 		.commentNode {
