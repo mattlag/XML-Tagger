@@ -50,10 +50,12 @@ function makeNode(thisNode, depth = 0) {
 			toggler = document.createElement('div');
 			toggler.setAttribute('class', 'toggler');
 			if(depth > UI.startDepth) {
-				toggler.append('⯈');
+				// toggler.append('⯈');
+				toggler.append(arrow('right'));
 				toggler.setAttribute('onclick', 'expand(this)');
 			} else {
-				toggler.append('⯆');
+				// toggler.append('⯆');
+				toggler.append(arrow('down'));
 				toggler.setAttribute('onclick', 'collapse(this)');
 			}
 
@@ -129,12 +131,31 @@ function trim(text) {
 
 function expand(node){
 	node.parentNode.parentNode.childNodes[1].style.display = 'block';
-	node.innerHTML = '⯆';
+	node.innerHTML = '';
+	node.append(arrow('down'));
 	node.setAttribute('onclick', 'collapse(this)');
 }
 
 function collapse(node){
 	node.parentNode.parentNode.childNodes[1].style.display = 'none';
-	node.innerHTML = '⯈';
+	node.innerHTML = '';
+	node.append(arrow('right'));
 	node.setAttribute('onclick', 'expand(this)');
+}
+
+function arrow(direction){
+	let svg = document.createElement('svg');
+	svg.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svg.setAttribute('viewBox', '0 0 12 12');
+	svg.setAttribute('width', '12');
+	svg.setAttribute('height', '12');
+	
+	let shape = document.createElement('use');
+
+	if(direction === 'down') shape.setAttribute('xlink:href', '#downArrow');
+	else if (direction === 'right') shape.setAttribute('xlink:href', '#rightArrow');
+	
+	svg.append(shape);
+
+	return svg;
 }
