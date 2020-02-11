@@ -61,6 +61,7 @@ function makeNode(thisNode, depth = 0) {
 		}
 		
 		elem.append(thisNode.nodeName);
+		elem.append(' ');
 		
 		// Attributes
 		if(thisNode.attributes){

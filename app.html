@@ -9,7 +9,8 @@
 	<script src="testXML.js"></script>
 	<style>
 		:root {
-			--left-pad: 8px;
+			--full-pad: 8px;
+			--half-pad: 4px;
 		}
 
 		* {
@@ -22,7 +23,7 @@
 		.nodeWrapper {
 			background-color: rgba(0, 0, 0, 0.05);
 			border-left: 1px solid black;
-			padding:2px 8px 2px var(--left-pad);
+			padding:2px 8px 2px var(--full-pad);
 			margin: 4px 0px 4px 0px;
 		}
 
@@ -37,17 +38,16 @@
 		.toggler {
 			display: inline-block;
 			cursor: pointer;
-			height: 1.2em;
-			width: 1.2em;
 			border: 1px solid transparent;
-			border-radius: 4px;
-			color:rgba(0, 0, 0, 0.4);
-			margin-right: var(--left-pad);
+			border-radius: 2px;
+			margin-right: var(--half-pad);
+			color:rgba(0, 30, 100, 0.4);
+			line-height: 80%;
 		}
 
 		.toggler:hover {
-			color: black;
-			border-color: rgba(0, 0, 0, 0.2);
+			color: rgb(0, 30, 100);
+			background-color: rgba(0, 30, 100, 0.1);
 		}
 
 		.commentNode {
@@ -73,9 +73,9 @@
 			padding: 2px 4px;
 			background-color: rgba(255, 255, 255, 0.4);
 			border: 1px solid rgba(255, 255, 255, 0.8);
-			border-radius: 3px;
+			border-radius: 4px;
 			font-size: 0.8em;
-			margin-left: var(--left-pad);
+			margin-left: var(--half-pad);
 			position: relative;
 			top: -1px;
 		}
