@@ -10,10 +10,9 @@ function load() {
 	let destination = document.getElementById('wrapper');
 
 	destination.append(makeNode(UI.XMLDocument.documentElement));
-
 }
 
-function makeNode(thisNode, depth = 0) {
+function makeNode(thisNode, depth = 0, hasNoSiblings = false) {
 	// console.log(`makeNode ${thisNode.nodeName}`);
 	let node = document.createElement('div');
 	node.setAttribute('class', 'nodeWrapper');
@@ -25,7 +24,12 @@ function makeNode(thisNode, depth = 0) {
 
 	if(thisNode.nodeName === '#text'){
 		content = trim(thisNode.nodeValue);
-		if(content) {
+		if(!content && hasNoSiblings) {
+			console.log('Empty Leaf Node found!')
+			content = ' ';
+		}
+
+		if(content || content === ' ') {
 			elem = document.createElement('div');
 			elem.setAttribute('class', 'textContent');
 			elem.append(content);
@@ -84,9 +88,10 @@ function makeNode(thisNode, depth = 0) {
 	if(depth > UI.startDepth) content.setAttribute('style', 'display:none;');
 
 	let kids = thisNode.childNodes;
+	let isOnlyChild = kids.length === 1;
 	let kidNode;
 	for(let k=0; k<kids.length; k++){
-		kidNode = makeNode(kids[k], (depth+=1));
+		kidNode = makeNode(kids[k], (depth+=1), isOnlyChild);
 		if(kidNode.innerHTML) content.append(kidNode);
 	}
 
@@ -129,13 +134,31 @@ function trim(text) {
 }
 
 function expand(node){
-	node.parentNode.parentNode.childNodes[1].style.display = 'block';
-	node.innerHTML = '⯆';
-	node.setAttribute('onclick', 'collapse(this)');
+	try {
+		node.parentNode.parentNode.childNodes[1].style.display = 'block';
+		node.innerHTML = '⯆';
+		node.setAttribute('onclick', 'collapse(this)');
+	} catch(err) {
+		console.warn(err);
+	}
 }
 
 function collapse(node){
-	node.parentNode.parentNode.childNodes[1].style.display = 'none';
-	node.innerHTML = '⯈';
-	node.setAttribute('onclick', 'expand(this)');
+	try {
+		node.parentNode.parentNode.childNodes[1].style.display = 'none';
+		node.innerHTML = '⯈';
+		node.setAttribute('onclick', 'expand(this)');
+	} catch(err) {
+		console.warn(err);
+	}
+}
+
+function expandAll() {
+	let togglers = document.querySelectorAll('.toggler');
+	togglers.forEach((node) => expand(node));
+}
+
+function collapseAll() {
+	let togglers = document.querySelectorAll('.toggler');
+	togglers.forEach((node) => collapse(node));
 }

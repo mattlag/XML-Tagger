@@ -20,6 +20,60 @@
 			box-sizing: border-box;
 		}
 
+		html, body {
+			height: 100%;
+		}
+
+		body {
+			display: grid;
+			grid-template-columns: 100px 1fr;
+			gap: 10px;
+		}
+
+		#appBar {
+			grid-column: 1;
+			background-color: hsl(200, 50%, 20%);
+			border-right: 1px solid  hsl(200, 80%, 10%);
+			color: white;
+			text-align: center;
+			box-shadow: 2px 0px 7px rgba(0, 30, 100, 0.4);
+		}
+
+		#wrapper {
+			grid-column: 2;
+			margin-top: 10px;
+		}
+
+		.logo {
+			background-color: hsl(200, 80%, 10%);
+			font-size: 24px;
+			line-height: 0.9em;
+			text-align: center;
+			font-weight: bold;
+			margin: 20px;
+			padding: 2px 0px;
+			border: 1px solid rgba(255, 255, 255, 0.7);
+			border-radius: 0px 8px;
+		}
+
+		#appBar button {
+			width: 80%;
+			color: rgba(255, 255, 255, 0.8);
+			background-color: rgba(255, 255, 255, 0.2);
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 2px;
+			margin: 4px 0px;
+			padding: 4px 0px;
+		}
+
+		#appBar button:hover {
+			cursor:pointer;
+			color: white;
+			background-color: rgba(255, 255, 255, 0.15);
+			border: 1px solid rgba(255, 255, 255, 0.5);
+			border-radius: 4px;
+		}
+
 		.nodeWrapper {
 			background-color: rgba(0, 0, 0, 0.05);
 			border-left: 1px solid black;
@@ -60,6 +114,8 @@
 		.textContent {
 			font-family: monospace;
 			color: navy;
+			padding-top: 2px;
+			min-height: 1em;
 		}
 
 		.commentContent {
@@ -90,6 +146,13 @@
 	</style>
 </head>
 <body onload='load();'>
+	<div id="appBar">
+		<div class="logo">
+			XML<br>TAG<br>GER
+		</div>
+		<button onclick="expandAll();">Expand All</button>
+		<button onclick="collapseAll();">Collapse All</button>
+	</div>
 	<div id="wrapper"></div>
 </body>
 </html>
