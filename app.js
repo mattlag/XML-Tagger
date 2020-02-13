@@ -6,7 +6,7 @@ var UI = {
 };
 
 
-function load() {
+function main() {
 	UI.XMLDocument = loadXMLDocument(testXML.trim());
 	console.log(UI.XMLDocument);
 	let destination = document.getElementById('wrapper');
@@ -164,7 +164,11 @@ function collapseAll() {
 	togglers.forEach((node) => collapse(node));
 }
 
-function download() {
+function loadFile() {
+	
+}
+
+function downloadFile() {
 	let content = generateFormattedTextFromDOMNode(UI.XMLDocument.documentElement);
 
 	let ftype = 'text/plain;charset=utf-8';
@@ -185,7 +189,7 @@ function download() {
 
 function generateFormattedTextFromDOMNode(node, level = 0){
 	// console.log(`Node ${node.tagName} level ${level} has ${node.childNodes.length} children`);
-	let content = '';
+	let content = '<?xml version="1.0" encoding="UTF-8"?>\n';
 	let indent = '';
 	let text = '';
 
