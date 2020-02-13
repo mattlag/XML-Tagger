@@ -1,7 +1,6 @@
 var testXML = `
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ttFont sfntVersion="OTTO" ttLibVersion="2.3">
-
   <GlyphOrder>
     <!-- The 'id' attribute is only for humans; it is ignored when parsed. -->
     <GlyphID id="0" name=".notdef"/>

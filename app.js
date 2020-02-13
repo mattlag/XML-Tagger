@@ -1,13 +1,14 @@
 var UI = {
 	XMLDocument: '',
 	documentName: 'test-xml-document.xml',
-	startDepth: 1
+	startDepth: 1,
+	indentChars: '  '
 };
 
 
 function load() {
-	UI.XMLDocument = loadXMLDocument(trim(testXML));
-	// console.log(UI.XMLDocument);
+	UI.XMLDocument = loadXMLDocument(testXML.trim());
+	console.log(UI.XMLDocument);
 	let destination = document.getElementById('wrapper');
 
 	let title = document.createElement('h1');
@@ -29,21 +30,22 @@ function makeNode(thisNode, depth = 0, hasNoSiblings = false) {
 	let toggler;
 
 	if(thisNode.nodeName === '#text'){
-		content = trim(thisNode.nodeValue);
+		content = thisNode.nodeValue.trim();
 		if(!content && hasNoSiblings) {
 			// console.log('Empty Leaf Node found!')
 			content = ' ';
 		}
 
 		if(content || content === ' ') {
+			content = content.replace(/\n/g, '<br>');
 			elem = document.createElement('div');
 			elem.setAttribute('class', 'textContent');
-			elem.append(content);
+			elem.innerHTML = content;
 			node.append(elem);
 		}
 		
 	} else if (thisNode.nodeName === '#comment'){
-		content = trim(thisNode.nodeValue);
+		content = thisNode.nodeValue.trim();
 		if(content) {
 			elem = document.createElement('div');
 			elem.setAttribute('class', 'commentContent');
@@ -132,13 +134,6 @@ function loadXMLDocument(inputXML = ''){
 	return XMLdoc;
 }
 
-function trim(text) {
-	try { 
-		text = text.replace(/^\s+|\s+$/g, '');
-		return text.replace(/(\r\n|\n|\r|\t)/gm,'');
-	} catch(e) { return ''; }
-}
-
 function expand(node){
 	try {
 		node.parentNode.parentNode.childNodes[1].style.display = 'block';
@@ -170,7 +165,7 @@ function collapseAll() {
 }
 
 function download() {
-	let content = UI.XMLDocument.firstElementChild.outerHTML;
+	let content = generateFormattedTextFromDOMNode(UI.XMLDocument.documentElement);
 
 	let ftype = 'text/plain;charset=utf-8';
 	let fblob = new Blob([content], {'type':ftype, 'endings':'native'});
@@ -186,4 +181,44 @@ function download() {
 	link.dispatchEvent(event);
 
 	return;
+}
+
+function generateFormattedTextFromDOMNode(node, level = 0){
+	// console.log(`Node ${node.tagName} level ${level} has ${node.childNodes.length} children`);
+	let content = '';
+	let indent = '';
+	let text = '';
+
+	for(let i=0; i<level; i++) indent += UI.indentChars;
+	level += 1;
+
+	if(node.nodeName === '#text'){
+		text = node.nodeValue.trim();
+		if(text) content += `${indent}${text}\n`;
+		
+	} else if (node.nodeName === '#comment'){
+		text = node.nodeValue.trim();
+		if(text) content += `${indent}<!--${text}-->\n`;
+
+	} else {
+		content = `${indent}<${node.tagName}`;
+
+		if(node.attributes){
+			for(let a=0; a<node.attributes.length; a++){
+				content += ` ${node.attributes[a].name}="${node.attributes[a].value}"`;
+			}
+		}
+
+		if(node.childNodes.length){
+			content += '>\n';
+			for(let n=0; n<node.childNodes.length; n++){
+				content += generateFormattedTextFromDOMNode(node.childNodes[n], level);
+			}
+			content += `${indent}</${node.tagName}>\n`;
+		} else {
+			content += '/>\n';
+		}
+	}
+
+	return content;
 }
