@@ -1,14 +1,20 @@
 var UI = {
 	XMLDocument: '',
+	documentName: 'test-xml-document.xml',
 	startDepth: 1
 };
 
 
 function load() {
 	UI.XMLDocument = loadXMLDocument(trim(testXML));
-	console.log(UI.XMLDocument);
+	// console.log(UI.XMLDocument);
 	let destination = document.getElementById('wrapper');
 
+	let title = document.createElement('h1');
+	title.innerText = UI.documentName;
+	document.title = UI.documentName;
+
+	destination.append(title);
 	destination.append(makeNode(UI.XMLDocument.documentElement));
 }
 
@@ -25,7 +31,7 @@ function makeNode(thisNode, depth = 0, hasNoSiblings = false) {
 	if(thisNode.nodeName === '#text'){
 		content = trim(thisNode.nodeValue);
 		if(!content && hasNoSiblings) {
-			console.log('Empty Leaf Node found!')
+			// console.log('Empty Leaf Node found!')
 			content = ' ';
 		}
 
@@ -161,4 +167,23 @@ function expandAll() {
 function collapseAll() {
 	let togglers = document.querySelectorAll('.toggler');
 	togglers.forEach((node) => collapse(node));
+}
+
+function download() {
+	let content = UI.XMLDocument.firstElementChild.outerHTML;
+
+	let ftype = 'text/plain;charset=utf-8';
+	let fblob = new Blob([content], {'type':ftype, 'endings':'native'});
+	let fname = UI.documentName;
+
+	let link = document.createElement('a');
+	window.URL = window.URL || window.webkitURL;
+	link.href = window.URL.createObjectURL(fblob);
+	link.download = fname;
+
+	let event = document.createEvent('MouseEvents');
+	event.initEvent('click', true, false);
+	link.dispatchEvent(event);
+
+	return;
 }

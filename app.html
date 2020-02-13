@@ -28,6 +28,8 @@
 			display: grid;
 			grid-template-columns: 100px 1fr;
 			gap: 10px;
+			max-height: 100%;
+			overflow: hidden;
 		}
 
 		#appBar {
@@ -42,6 +44,13 @@
 		#wrapper {
 			grid-column: 2;
 			margin-top: 10px;
+			padding-right: 10px;
+			overflow-y: scroll;
+		}
+
+		#wrapper h1 {
+			font-weight: normal;
+			color: hsl(200, 50%, 20%);
 		}
 
 		.logo {
@@ -74,19 +83,26 @@
 			border-radius: 4px;
 		}
 
+		#appBar hr {
+			margin: 10px 10px;
+			background-color: rgba(255, 255, 255, 0.5);
+			border: 0;
+			height: 1px;
+		}
+
 		.nodeWrapper {
 			background-color: rgba(0, 0, 0, 0.05);
 			border-left: 1px solid black;
-			padding:2px 8px 2px var(--full-pad);
+			padding:0px 8px 0px var(--full-pad);
 			margin: 4px 0px 4px 0px;
 		}
 
 		.nodeHeader {
-
+			padding: 4px 4px 5px 0px;
 		}
 
 		.nodeContent {
-
+			padding: 0px 2px 2px 0px;
 		}
 
 		.toggler {
@@ -114,8 +130,8 @@
 		.textContent {
 			font-family: monospace;
 			color: navy;
-			padding-top: 2px;
 			min-height: 1em;
+			padding: 4px 0px 6px 0px;
 		}
 
 		.commentContent {
@@ -132,8 +148,6 @@
 			border-radius: 4px;
 			font-size: 0.8em;
 			margin-left: var(--half-pad);
-			position: relative;
-			top: -1px;
 		}
 
 		.node h1 {
@@ -152,6 +166,9 @@
 		</div>
 		<button onclick="expandAll();">Expand All</button>
 		<button onclick="collapseAll();">Collapse All</button>
+		<hr>
+		<button onclick="download();">Save file</button>
+
 	</div>
 	<div id="wrapper"></div>
 </body>
