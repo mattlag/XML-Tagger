@@ -11,6 +11,7 @@
 		:root {
 			--full-pad: 8px;
 			--half-pad: 4px;
+			--dialog-box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.4);
 		}
 
 		* {
@@ -43,7 +44,6 @@
 
 		#wrapper {
 			grid-column: 2;
-			margin-top: 10px;
 			padding-right: 10px;
 			overflow-y: scroll;
 		}
@@ -51,7 +51,7 @@
 		#wrapper h1 {
 			font-weight: normal;
 			color: hsl(200, 50%, 20%);
-			margin-bottom: 10px;
+			margin: 10px;
 		}
 
 		.logo {
@@ -93,46 +93,53 @@
 
 		.nodeWrapper {
 			background-color: rgba(0, 0, 0, 0.05);
-			border-left: 1px solid black;
-			padding:0px 8px 0px var(--full-pad);
-			margin: 4px 0px 4px 0px;
+			border-left: 1px solid rgba(0, 0, 0, 0.2);
+			padding:0px 8px 0px 0;
+			margin: 4px 0px 4px var(--full-pad);
 		}
 
 		.nodeHeader {
-			padding: 4px 4px 5px 0px;
+			padding: 0px 4px 0px 0px;
 		}
 
 		.nodeContent {
 			padding: 0px 2px 2px 0px;
 		}
 
-		.toggler {
+		.title, .togglerTitle {
 			display: inline-block;
-			cursor: pointer;
 			border: 1px solid transparent;
-			border-radius: 2px;
+			border-radius: 0px 4px 4px 0px;
 			margin-right: var(--half-pad);
-			color:rgba(0, 30, 100, 0.4);
-			line-height: 80%;
+			color:rgba(0, 30, 100, 0.8);
+			padding: 2px 8px 2px 2px;
+			height: 1.6em;
 		}
 
-		.toggler:hover {
+		.togglerTitle:hover {
+			cursor: pointer;
 			color: rgb(0, 30, 100);
 			background-color: rgba(0, 30, 100, 0.1);
+		}
+
+		.title {
+			color:rgba(0, 0, 0, 0.95);
+			cursor: default;
+			padding: 4px 4px 0px var(--full-pad);
 		}
 
 		.commentNode {
 			background-color: transparent;
 			border-left: 1px solid transparent;
-			padding:2px 8px 2px 0px;
+			padding:2px 8px 2px var(--full-pad);
 			margin: 4px 0px 4px 0px;
 		}
 
 		.textContent {
 			font-family: monospace;
-			color: navy;
+			color: black;
 			min-height: 1em;
-			padding: 4px 0px 6px 0px;
+			padding: 4px 0px 6px var(--full-pad);
 		}
 
 		.commentContent {
@@ -142,19 +149,37 @@
 			background-color: transparent;
 		}
 
-		.attributeContent {
+		.attributeContent,
+		.attributeContentActive {
 			padding: 2px 4px;
 			background-color: rgba(255, 255, 255, 0.4);
 			border: 1px solid rgba(255, 255, 255, 0.8);
 			border-radius: 4px;
 			font-size: 0.8em;
 			margin-left: var(--half-pad);
+			position: relative;
+			top: -2px;
+			cursor: default;
+		}
+
+		.attributeContentActive {
+			border-radius: 4px 0px 0px 4px;
+			background-color: white;
+			box-shadow: var(--dialog-box-shadow);
+			border: 1px solid rgba(0, 50, 100, 1);
 		}
 
 		.attributeContent:hover {
 			background-color: rgba(255, 255, 255, 0.6);
 			border: 1px solid rgba(255, 255, 255, 1);
 			cursor: pointer;
+		}
+
+		.attributeContent span,
+		.attributeContentActive span {
+			color:rgba(0, 0, 0, 0.3);
+			padding: 0px 4px;
+			font-weight: bold;
 		}
 
 		.node h1 {
@@ -165,7 +190,7 @@
 			display: inline-block;
 		}
 
-		#dialog {
+		.dialog {
 			position: absolute;
 			top: 200px;
 			left: 200px;
@@ -173,13 +198,13 @@
 			min-height: 100px;
 			background-color: white;
 			border: 1px solid rgba(0, 50, 100, 1);
-			border-radius: 4px;
+			border-radius: 0px 4px 4px 4px;
 			padding: 20px 10px 20px 20px;
 			text-align: center;
-			box-shadow: 2px 2px 7px rgba(0, 30, 100, 0.4);
+			box-shadow: var(--dialog-box-shadow);
 		}
 
-		#dialog button {
+		.dialog button {
 			display: inline-block;
 			width: 100px;
 			margin: 10px 10px 0px 0px;
@@ -190,7 +215,7 @@
 			padding: 4px 0px;
 		}
 
-		#dialog button:hover {
+		.dialog button:hover {
 			cursor:pointer;
 			color: rgba(0, 50, 100, 1);
 			background-color: rgba(0, 50, 100, 0.15);
@@ -198,11 +223,11 @@
 			border-radius: 4px;
 		}
 
-		#dialog label {
+		.dialog label {
 			padding: 0px 10px 0px 0px;
 		}
 
-		#dialog input {
+		.dialog input {
 			padding: 4px 0px 4px 4px;
 		}
 	</style>
@@ -219,6 +244,6 @@
 		<button onclick="downloadFile();">Save file</button>
 
 	</div>
-	<div id="wrapper"></div>
+	<div id="wrapper" onscroll="closeAllDialogs();"></div>
 </body>
 </html>
