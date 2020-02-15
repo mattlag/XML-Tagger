@@ -187,6 +187,40 @@ function unescape(value = ''){
 
 function showLoadFileDialog() {
 	closeAllDialogs();
+
+	let dialog = createElem('div', {class: 'dialog'});
+
+	dialog.style.width = '400px';
+	dialog.style.height = '400px';
+
+	dialog.innerHTML = '<h1>hello!</h1>';
+
+	document.body.append(dialog);
+}
+
+function handleDrop(evt) {
+	evt.stopPropagation();
+	evt.preventDefault();
+
+	let f = evt.dataTransfer || document.getElementById('filechooser');
+	f = f.files[0];
+	let fname = f.name.split('.');
+	fname = fname[fname.length-1].toLowerCase();
+
+	let reader = new FileReader();
+
+	if (fname === 'xml' || fname === 'svg'){
+		reader.onload = function() {
+			UI.XMLDocument = loadXMLDocument(reader.result.trim());
+			consolelog(UI.XMLDocument);
+			loadTree();
+		};
+
+		reader.readAsText(f);
+
+	} else {
+
+	}
 }
 
 function closeAllDialogs(){
@@ -252,10 +286,6 @@ function expandAll() {
 function collapseAll() {
 	closeAllDialogs();
 	document.querySelectorAll('.togglerTitle').forEach((node) => collapse(node));
-}
-
-function loadFile() {
-	
 }
 
 function downloadFile() {
