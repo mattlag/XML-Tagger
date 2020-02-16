@@ -1,5 +1,5 @@
 var UI = {
-	devmode: true,
+	devmode: false,
 	XMLDocument: '',
 	documentName: 'test-xml-document.xml',
 	startDepth: 2,
@@ -127,6 +127,8 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 	let dialog = createElem('div', {class: 'dialog'});
 	dialog.style.top = `${domNodePos.top}px`;
 	dialog.style.left = `${domNodePos.right-1}px`;
+	dialog.style.borderRadius = "0px 4px 4px 4px";
+	dialog.style.textAlign = "center";
 
 	let lable = createElem('label');
 	lable.append(xmlAttribute.name);
@@ -151,7 +153,7 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 		background-color: white;
 		border: 0;
 		width:3px;
-		height:${domNodePos.height-2}px;
+		height:${domNodePos.height-1}px;
 		position:absolute;
 		top:0px;
 		left:-2px;
@@ -192,8 +194,13 @@ function showLoadFileDialog() {
 
 	dialog.style.width = '400px';
 	dialog.style.height = '400px';
+	dialog.style.left = "120px";
+	dialog.style.top = "10px";
 
-	dialog.innerHTML = '<h1>hello!</h1>';
+	dialog.innerHTML = `
+		<h1>Load a XML file</h1>
+		<p>Drag and drop a .xml or .svg file here to load it.</p>
+	`;
 
 	document.body.append(dialog);
 }
