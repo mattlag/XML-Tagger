@@ -27,7 +27,7 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 	confirm.onclick = function() {
 		xmlAttribute.value = escape(input.value);
 		domNode.innerHTML = '';
-		domNode.append(`${xmlAttribute.name}${UI.separator}${xmlAttribute.value}`);
+		domNode.innerHTML = `${xmlAttribute.name}${UI.separator}${xmlAttribute.value}`;
 		closeAllDialogs();
 	};
 

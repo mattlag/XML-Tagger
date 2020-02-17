@@ -4,7 +4,7 @@ var UI = {
 	documentName: 'test-xml-document.xml',
 	startDepth: 2,
 	indentChars: '  ',
-	separator: ' = '
+	separator: '&nbsp;=&nbsp;'
 };
 
 
@@ -118,8 +118,8 @@ function makeNode(thisNode, depth = 0, hasNoSiblings = false) {
 				let domNode = createElem('span', {class: 'attributeContent'});
 				let xmlAttribute = thisNode.attributes[a];
 				domNode.onclick = function(event){ event.stopPropagation(); showAttributeEditDialog(xmlAttribute, domNode); };
-				domNode.setAttribute('title', `Click to edit "${xmlAttribute.name}"`);
-				domNode.append(`${xmlAttribute.name}${UI.separator}${xmlAttribute.value}`);
+				domNode.setAttribute('title', `Click to edit '${xmlAttribute.name}'`);
+				domNode.innerHTML = `${xmlAttribute.name}${UI.separator}${xmlAttribute.value}`;
 				elem.append(domNode);
 			}
 		}
