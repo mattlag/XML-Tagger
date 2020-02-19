@@ -2,7 +2,7 @@ var UI = {
 	devmode: true,
 	XMLDocument: '',
 	documentName: '',
-	startDepth: 2,
+	startDepth: 1,
 	indentChars: '  ',
 	separator: '&nbsp;=&nbsp;'
 };
@@ -10,13 +10,13 @@ var UI = {
 
 function main() {
 	if(UI.devmode) {
-		loadXML(testXML.trim(), 'test-xml-document.xml');
+		load(testXML.trim(), 'test-xml-document.xml');
 	} else {
 		showLoadFileDialog();
 	}
 }
 
-function loadXML(xml, fname){
+function load(xml, fname){
 	UI.XMLDocument = loadXMLDocument(xml, fname);
 	consolelog(UI.XMLDocument);
 	UI.documentName = fname;
@@ -61,7 +61,7 @@ function loadTree(){
 	destination.append(makeTreeNode(UI.XMLDocument.documentElement));
 }
 
-function makeTreeNode(thisNode, depth = 0, hasNoSiblings = false) {
+function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false) {
 	// consolelog(`makeTreeNode ${thisNode.nodeName}`);
 	let node = createElem('div', {class: 'nodeWrapper'});
 	node.onclick = closeAllDialogs;
@@ -142,7 +142,7 @@ function makeTreeNode(thisNode, depth = 0, hasNoSiblings = false) {
 	let isOnlyChild = kids.length === 1;
 	let kidNode;
 	for(let k=0; k<kids.length; k++){
-		kidNode = makeTreeNode(kids[k], (depth+=1), isOnlyChild);
+		kidNode = makeTreeNode(kids[k], (depth+1), isOnlyChild);
 		if(kidNode.innerHTML) content.append(kidNode);
 	}
 
