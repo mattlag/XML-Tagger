@@ -1,27 +1,50 @@
 
-function handleDrop(evt) {
-	evt.stopPropagation();
+function handleDragOver(evt){
 	evt.preventDefault();
 
-	let f = evt.dataTransfer || document.getElementById('filechooser');
+	let target = document.getElementById('dropTarget');
+	target.innerHTML = 'drop it!';
+}
+
+function handleDragLeave(evt){
+	evt.preventDefault();
+
+	let target = document.getElementById('dropTarget');
+	target.innerHTML = 'drop a file here';
+}
+
+function handleDrop(evt) {
+	evt.preventDefault();
+
+	let f = evt.dataTransfer || document.getElementById('fileChooser');
 	f = f.files[0];
 	let fname = f.name.split('.');
 	fname = fname[fname.length-1].toLowerCase();
+	let target = document.getElementById('dropTarget');
 
 	let reader = new FileReader();
 
 	if (fname === 'xml' || fname === 'svg'){
 		reader.onload = function() {
-			UI.XMLDocument = loadXMLDocument(reader.result.trim());
-			consolelog(UI.XMLDocument);
-			loadTree();
+			loadXML(reader.result.trim(), f.name);
 		};
-
 		reader.readAsText(f);
-
+		target.innerHTML = 'loading...';
 	} else {
-
+		target.innerHTML = 'please drop a .xml or .svg file';
+		document.setTimeout(() => {
+			target.innerHTML = 'drop a file here';
+		}, 1000);
 	}
+	
+	removeElem(document.getElementById('fileChooser'));
+}
+
+function launchOSFileChooser(){
+	let fileChooser = createElem('input', {type: 'file', id: 'fileChooser', style: 'display:none;'});
+	fileChooser.setAttribute('onchange', 'handleDrop(event);');
+	document.body.append(fileChooser);
+	fileChooser.click();
 }
 
 function generateFormattedTextFromDOMNode(node, level = 0){
@@ -82,4 +105,9 @@ function downloadFile() {
 	link.dispatchEvent(event);
 
 	return;
+}
+
+function disableDrop(event){
+	event.preventDefault();
+	event.stopPropagation();
 }

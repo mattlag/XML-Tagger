@@ -12,7 +12,7 @@
 	<script src="testXML.js"></script>
 	<link rel="stylesheet" href="style.css"/>
 </head>
-<body onload='main();'>
+<body onload='main();' ondrop="disableDrop(event);">
 	<div id="appBar">
 		<div class="logo">
 			XML<br>T&#xfeff;AG<br>GER
@@ -22,7 +22,6 @@
 		<hr>
 		<button onclick="showLoadFileDialog();">Load file</button>
 		<button onclick="downloadFile();">Save file</button>
-
 	</div>
 	<div id="wrapper" onscroll="closeAllDialogs();"></div>
 </body>

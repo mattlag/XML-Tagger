@@ -1,6 +1,6 @@
 function closeAllDialogs(){
 	let dialogs = document.querySelectorAll('.dialog');
-	if(dialogs.length) dialogs.forEach((d) => d.parentElement.removeChild(d));
+	if(dialogs.length) dialogs.forEach((d) => removeElem(d));
 	
 	let attrCons = document.querySelectorAll('.attributeContentActive');
 	if(attrCons.length) attrCons.forEach((a) => a.setAttribute('class', 'attributeContent'));
@@ -63,13 +63,15 @@ function showLoadFileDialog() {
 	let dialog = createElem('div', {class: 'dialog'});
 
 	dialog.style.width = '400px';
-	dialog.style.height = '400px';
-	dialog.style.left = "120px";
+	dialog.style.left = "118px";
 	dialog.style.top = "10px";
 
 	dialog.innerHTML = `
 		<h1>Load a XML file</h1>
 		<p>Drag and drop a .xml or .svg file here to load it.</p>
+		<div id="dropTarget" ondrop="handleDrop(event);" ondragover="handleDragOver(event);" ondragleave="handleDragLeave(event);">drop a file here</div>
+		<button onclick="launchOSFileChooser();">browse for a file</button>
+		<button onclick="closeAllDialogs();">cancel</button>
 	`;
 
 	document.body.append(dialog);

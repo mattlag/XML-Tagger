@@ -1,7 +1,7 @@
 var UI = {
 	devmode: true,
 	XMLDocument: '',
-	documentName: 'test-xml-document.xml',
+	documentName: '',
 	startDepth: 2,
 	indentChars: '  ',
 	separator: '&nbsp;=&nbsp;'
@@ -10,12 +10,17 @@ var UI = {
 
 function main() {
 	if(UI.devmode) {
-		UI.XMLDocument = loadXMLDocument(testXML.trim());
-		consolelog(UI.XMLDocument);
-		loadTree();
+		loadXML(testXML.trim(), 'test-xml-document.xml');
 	} else {
 		showLoadFileDialog();
 	}
+}
+
+function loadXML(xml, fname){
+	UI.XMLDocument = loadXMLDocument(xml, fname);
+	consolelog(UI.XMLDocument);
+	UI.documentName = fname;
+	loadTree();
 }
 
 function loadXMLDocument(inputXML = ''){
@@ -44,19 +49,20 @@ function loadXMLDocument(inputXML = ''){
 }
 
 function loadTree(){
+	closeAllDialogs();
 	let destination = document.getElementById('wrapper');
 	destination.innerHTML = '';
 
 	let title = createElem('h1');
 	title.innerText = UI.documentName;
-	document.title = UI.documentName;
+	document.title = `XMLtagger: ${UI.documentName}`;
 
 	destination.append(title);
-	destination.append(makeNode(UI.XMLDocument.documentElement));
+	destination.append(makeTreeNode(UI.XMLDocument.documentElement));
 }
 
-function makeNode(thisNode, depth = 0, hasNoSiblings = false) {
-	// consolelog(`makeNode ${thisNode.nodeName}`);
+function makeTreeNode(thisNode, depth = 0, hasNoSiblings = false) {
+	// consolelog(`makeTreeNode ${thisNode.nodeName}`);
 	let node = createElem('div', {class: 'nodeWrapper'});
 	node.onclick = closeAllDialogs;
 
@@ -136,7 +142,7 @@ function makeNode(thisNode, depth = 0, hasNoSiblings = false) {
 	let isOnlyChild = kids.length === 1;
 	let kidNode;
 	for(let k=0; k<kids.length; k++){
-		kidNode = makeNode(kids[k], (depth+=1), isOnlyChild);
+		kidNode = makeTreeNode(kids[k], (depth+=1), isOnlyChild);
 		if(kidNode.innerHTML) content.append(kidNode);
 	}
 
@@ -170,6 +176,10 @@ function createElem(nodeName = 'div', attributes = {}){
 	}
 
 	return elem;
+}
+
+function removeElem(elem) {
+	if(elem) elem.parentElement.removeChild(elem);
 }
 
 function consolelog(message){
