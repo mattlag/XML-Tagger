@@ -1,4 +1,3 @@
-
 function expand(node){
 	closeAllDialogs();
 	try {

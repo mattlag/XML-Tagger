@@ -58,6 +58,7 @@ function generateFormattedTextFromDOMNode(node, level = 0){
 
 	if(node.nodeName === '#text'){
 		text = node.nodeValue.trim();
+		text = text.replace(/\n/g, `\n${indent}`);
 		if(text) {
 			if(text.length > UI.oneLinerLength) {
 				content += `\n${indent}${text}\n`;
@@ -68,6 +69,7 @@ function generateFormattedTextFromDOMNode(node, level = 0){
 		
 	} else if (node.nodeName === '#comment'){
 		text = node.nodeValue.trim();
+		text = text.replace(/\n/g, `\n${indent}`);
 		if(text) content += `${indent}<!--${text}-->\n`;
 
 	} else {
@@ -121,6 +123,7 @@ function downloadFile() {
 	event.initEvent('click', true, false);
 	link.dispatchEvent(event);
 
+	markProjectAsSaved();
 	return;
 }
 

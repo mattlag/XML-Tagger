@@ -5,6 +5,7 @@ var UI = {
 	XMLDocument: '',
 	documentName: '',
 	startDepth: 1,
+	preserveWhitespace: false,
 	oneLinerLength: 100,
 	indentChars: '	',
 	separator: '&nbsp;=&nbsp;'
@@ -13,13 +14,20 @@ var UI = {
 
 function main() {
 	if(UI.devmode) {
-		load(testXML.trim(), 'test-xml-document.xml');
+		load(testXML, 'test-xml-document.xml');
 	} else {
 		showLoadFileDialog();
 	}
 }
 
 function load(xml, fname){
+	let xmlCopy = xml;
+	
+	if(!UI.preserveWhitespace){
+		xml = xml.replace(/ +/g, ' ');
+		xml = xml.replace(/\t+/g, '');
+	}
+	xml = xml.trim();
 	UI.XMLText = xml;
 	
 	UI.XMLDocument = loadXMLDocument(xml, fname);
@@ -28,8 +36,8 @@ function load(xml, fname){
 	UI.documentName = fname;
 
 	let firstTagName = `<${UI.XMLDocument.firstElementChild.tagName}`;
-	let firstTagIndex = xml.indexOf(firstTagName);
-	UI.XMLHeader = xml.substring(0, firstTagIndex);
+	let firstTagIndex = xmlCopy.indexOf(firstTagName);
+	UI.XMLHeader = xmlCopy.substring(0, firstTagIndex);
 
 	loadTree();
 }
@@ -64,7 +72,7 @@ function loadTree(){
 	let destination = document.getElementById('wrapper');
 	destination.innerHTML = '';
 
-	let title = createElem('h1');
+	let title = createElem('h1', {id: 'documentName', class: 'saved'});
 	title.innerText = UI.documentName;
 	document.title = `XMLtagger: ${UI.documentName}`;
 
@@ -94,7 +102,9 @@ function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false) {
 			content = content.replace(/\n/g, '<br>');
 			elem = createElem('div', {class: 'textContent'});
 			elem.innerHTML = content;
+			elem.onclick = function(event){ event.stopPropagation(); showTextEditDialog(thisNode, elem);};
 			node.append(elem);
+			node.setAttribute('class', 'textNode');
 		}
 		
 	} else if (thisNode.nodeName === '#comment'){

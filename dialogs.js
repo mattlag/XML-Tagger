@@ -16,8 +16,8 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 	dialog.style.borderRadius = "0px 4px 4px 4px";
 	dialog.style.textAlign = "center";
 
-	let lable = createElem('label');
-	lable.append(xmlAttribute.name);
+	let label = createElem('label');
+	label.append(xmlAttribute.name);
 
 	let input = createElem('input', {type: 'text'});
 	input.setAttribute('value', xmlAttribute.value);
@@ -25,6 +25,7 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 	let confirm = createElem('button');
 	confirm.append('save');
 	confirm.onclick = function() {
+		if(input.value !== xmlAttribute.value) markProjectAsUnsaved();
 		xmlAttribute.value = escape(input.value);
 		domNode.innerHTML = '';
 		domNode.innerHTML = `${xmlAttribute.name}${UI.separator}${xmlAttribute.value}`;
@@ -39,20 +40,63 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 		background-color: white;
 		border: 0;
 		width:3px;
-		height:${domNodePos.height-1}px;
+		height:${domNodePos.height-2}px;
 		position:absolute;
 		top:0px;
 		left:-2px;
 	`});
 
-	dialog.append(lable);
-	dialog.append(input);
-	dialog.append(createElem('br'));
-	dialog.append(confirm);
-	dialog.append(cancel);
+	let footer = createElem('div', {class: 'buttonfooter'});
+	footer.append(confirm);
+	footer.append(cancel);
+
+	let wrapper = createElem('div', {class: 'content'});
+	wrapper.append(label);
+	wrapper.append(input);
+
+	dialog.append(wrapper);
+	dialog.append(footer);
 	dialog.append(mask);
 
 	domNode.setAttribute('class', 'attributeContentActive');
+
+	document.body.append(dialog);
+}
+
+function showTextEditDialog(xmlAttribute, domNode){
+	closeAllDialogs();
+
+	let domNodePos = domNode.getBoundingClientRect();
+	let dialog = createElem('div', {class: 'dialog'});
+	dialog.style.top = `${domNodePos.top}px`;
+	dialog.style.left = `${domNodePos.left}px`;
+	dialog.style.borderRadius = "0px 0px 4px 4px";
+
+	let input = createElem('textarea');
+	input.innerHTML = xmlAttribute.data.trim();	
+	input.style.minWidth = `${domNodePos.width+10}px`;
+	input.style.minHeight = `${domNodePos.height+10}px`;
+
+	
+	let confirm = createElem('button');
+	confirm.append('save');
+	confirm.onclick = function() {
+		if(input.value !== xmlAttribute.data) markProjectAsUnsaved();
+		xmlAttribute.data = escape(input.value);
+		domNode.innerHTML = xmlAttribute.data.replace(/\n/g, '<br>');
+		closeAllDialogs();
+	};
+	
+	let cancel = createElem('button');
+	cancel.append('cancel');
+	cancel.onclick = closeAllDialogs;
+	
+	let footer = createElem('div', {class: 'buttonfooter'});
+	footer.append(confirm);
+	footer.append(cancel);
+
+	dialog.append(input);
+	dialog.append(footer);
 
 	document.body.append(dialog);
 }
@@ -75,4 +119,14 @@ function showLoadFileDialog() {
 	`;
 
 	document.body.append(dialog);
+}
+
+function markProjectAsUnsaved(){
+	document.getElementById('saveButton').removeAttribute('disabled');
+	document.title = '● ' + document.title;
+}
+
+function markProjectAsSaved(){
+	document.getElementById('saveButton').setAttribute('disabled', 'disabled');
+	document.title = `XMLtagger: ${UI.documentName}`;
 }
