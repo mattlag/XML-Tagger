@@ -58,7 +58,13 @@ function generateFormattedTextFromDOMNode(node, level = 0){
 
 	if(node.nodeName === '#text'){
 		text = node.nodeValue.trim();
-		if(text) content += `${indent}${text}\n`;
+		if(text) {
+			if(text.length > UI.oneLinerLength) {
+				content += `\n${indent}${text}\n`;
+			} else {
+				content += text;
+			}
+		}
 		
 	} else if (node.nodeName === '#comment'){
 		text = node.nodeValue.trim();
@@ -73,12 +79,23 @@ function generateFormattedTextFromDOMNode(node, level = 0){
 			}
 		}
 
-		if(node.childNodes.length){
-			content += '>\n';
+		if(node.childNodes.length === 1){
+			content += '>';
+			content += generateFormattedTextFromDOMNode(node.childNodes[0], level);
+			if(node.childNodes[0].nodeName === '#text' && node.childNodes[0].nodeValue.trim().length < UI.oneLinerLength) {
+				content += `</${node.tagName}>\n`;
+			} else {
+				content += `${indent}</${node.tagName}>\n`;
+			}
+		
+		} else if (node.childNodes.length > 1){
+			content += '>';
+			if(node.childNodes.length > 1) content += '\n';
 			for(let n=0; n<node.childNodes.length; n++){
 				content += generateFormattedTextFromDOMNode(node.childNodes[n], level);
 			}
 			content += `${indent}</${node.tagName}>\n`;
+		
 		} else {
 			content += '/>\n';
 		}
@@ -88,7 +105,7 @@ function generateFormattedTextFromDOMNode(node, level = 0){
 }
 
 function downloadFile() {
-	let content = '<?xml version="1.0" encoding="UTF-8"?>\n';
+	let content = UI.XMLHeader || '<?xml version="1.0" encoding="UTF-8"?>\n';
 	content += generateFormattedTextFromDOMNode(UI.XMLDocument.documentElement);
 
 	let ftype = 'text/plain;charset=utf-8';

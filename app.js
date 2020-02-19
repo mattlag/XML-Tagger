@@ -1,9 +1,12 @@
 var UI = {
 	devmode: true,
+	XMLText: '',
+	XMLHeader: '',
 	XMLDocument: '',
 	documentName: '',
 	startDepth: 1,
-	indentChars: '  ',
+	oneLinerLength: 100,
+	indentChars: '	',
 	separator: '&nbsp;=&nbsp;'
 };
 
@@ -17,9 +20,17 @@ function main() {
 }
 
 function load(xml, fname){
+	UI.XMLText = xml;
+	
 	UI.XMLDocument = loadXMLDocument(xml, fname);
 	consolelog(UI.XMLDocument);
+	
 	UI.documentName = fname;
+
+	let firstTagName = `<${UI.XMLDocument.firstElementChild.tagName}`;
+	let firstTagIndex = xml.indexOf(firstTagName);
+	UI.XMLHeader = xml.substring(0, firstTagIndex);
+
 	loadTree();
 }
 
