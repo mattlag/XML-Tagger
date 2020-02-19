@@ -15,12 +15,11 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 	dialog.style.left = `${domNodePos.right-1}px`;
 	dialog.style.borderRadius = "0px 4px 4px 4px";
 	dialog.style.textAlign = "center";
-
-	let label = createElem('label');
-	label.append(xmlAttribute.name);
-
-	let input = createElem('input', {type: 'text'});
-	input.setAttribute('value', xmlAttribute.value);
+	
+	let input = createElem('textarea');
+	input.innerHTML = xmlAttribute.value;
+	input.style.minWidth = `${domNodePos.width+40}px`;
+	input.style.minHeight = `${domNodePos.height+10}px`;
 
 	let confirm = createElem('button');
 	confirm.append('save');
@@ -50,11 +49,7 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 	footer.append(confirm);
 	footer.append(cancel);
 
-	let wrapper = createElem('div', {class: 'content'});
-	wrapper.append(label);
-	wrapper.append(input);
-
-	dialog.append(wrapper);
+	dialog.append(input);
 	dialog.append(footer);
 	dialog.append(mask);
 
@@ -74,8 +69,8 @@ function showTextEditDialog(xmlAttribute, domNode){
 
 	let input = createElem('textarea');
 	input.innerHTML = xmlAttribute.data.trim();	
-	input.style.minWidth = `${domNodePos.width+10}px`;
-	input.style.minHeight = `${domNodePos.height+10}px`;
+	input.style.minWidth = `${domNodePos.width+40}px`;
+	input.style.minHeight = `${domNodePos.height+40}px`;
 
 	
 	let confirm = createElem('button');
@@ -110,13 +105,21 @@ function showLoadFileDialog() {
 	dialog.style.left = "118px";
 	dialog.style.top = "10px";
 
-	dialog.innerHTML = `
+	let wrapper = createElem('div', {class: 'content'});
+	wrapper.innerHTML = `
 		<h1>Load a XML file</h1>
 		<p>Drag and drop a .xml or .svg file here to load it.</p>
 		<div id="dropTarget" ondrop="handleDrop(event);" ondragover="handleDragOver(event);" ondragleave="handleDragLeave(event);">drop a file here</div>
+	`;
+
+	let footer = createElem('div', {class: 'buttonfooter'});
+	footer.innerHTML = `
 		<button onclick="launchOSFileChooser();">browse for a file</button>
 		<button onclick="closeAllDialogs();">cancel</button>
 	`;
+
+	dialog.append(wrapper);
+	dialog.append(footer);
 
 	document.body.append(dialog);
 }

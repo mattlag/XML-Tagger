@@ -1,6 +1,5 @@
 var UI = {
 	devmode: true,
-	XMLText: '',
 	XMLHeader: '',
 	XMLDocument: '',
 	documentName: '',
@@ -21,23 +20,23 @@ function main() {
 }
 
 function load(xml, fname){
-	let xmlCopy = xml;
-	
+	consolelog(xml);
+	let loadXML = xml;
+
 	if(!UI.preserveWhitespace){
-		xml = xml.replace(/ +/g, ' ');
-		xml = xml.replace(/\t+/g, '');
+		loadXML = loadXML.replace(/ +/g, ' ');
+		loadXML = loadXML.replace(/\t+/g, '');
 	}
-	xml = xml.trim();
-	UI.XMLText = xml;
+	loadXML = loadXML.trim();
 	
-	UI.XMLDocument = loadXMLDocument(xml, fname);
+	UI.XMLDocument = loadXMLDocument(loadXML);
 	consolelog(UI.XMLDocument);
 	
 	UI.documentName = fname;
 
 	let firstTagName = `<${UI.XMLDocument.firstElementChild.tagName}`;
-	let firstTagIndex = xmlCopy.indexOf(firstTagName);
-	UI.XMLHeader = xmlCopy.substring(0, firstTagIndex);
+	let firstTagIndex = xml.indexOf(firstTagName);
+	UI.XMLHeader = xml.substring(0, firstTagIndex);
 
 	loadTree();
 }

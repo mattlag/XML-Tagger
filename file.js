@@ -26,7 +26,7 @@ function handleDrop(evt) {
 
 	if (fname === 'xml' || fname === 'svg'){
 		reader.onload = function() {
-			loadXML(reader.result.trim(), f.name);
+			load(reader.result.trim(), f.name);
 		};
 		reader.readAsText(f);
 		target.innerHTML = 'loading...';
