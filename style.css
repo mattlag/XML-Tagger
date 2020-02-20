@@ -9,6 +9,11 @@
 	padding: 0;
 	font-family: sans-serif;
 	box-sizing: border-box;
+	user-select: none;
+}
+
+textarea, input {
+	user-select: text;
 }
 
 html, body {
@@ -26,6 +31,46 @@ body {
 h1 {
 	font-weight: normal;
 	color: hsl(200, 50%, 20%);
+}
+
+#documentName {
+	display: inline-block;
+}
+
+.searchWrapper {
+	display: inline-grid;
+	width: 300px;
+	grid-template-columns: 24px 1fr 24px;
+	margin: 0px 0px 0px var(--full-pad);
+	position: relative;
+	top: -4px;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
+}
+
+.searchIcon {
+	grid-column: 1;
+	font-size: 0.8em;
+	padding: 2px 0px 0px 2px;
+}
+
+#search {
+	grid-column: 2;
+	padding: 4px;
+	border: 0;
+}
+
+.searchClear {
+	grid-column: 3;
+	cursor: pointer;
+	border-left:1px solid rgba(0, 30, 100, 0.05);
+	color: rgba(0, 30, 100, 0.4);
+	text-align: center;
+}
+
+.searchClear:hover {
+	background-color: rgba(0, 30, 100, 0.4);
+	color: white;
 }
 
 #appBar {
@@ -56,6 +101,7 @@ h1 {
 	margin: 20px;
 	padding: 2px 0px;
 	border: 1px solid rgba(255, 255, 255, 0.7);
+	box-shadow: 2px 2px 7px rgba(0, 30, 100, 0.9);
 	border-radius: 0px 12px;
 }
 
@@ -95,7 +141,7 @@ h1 {
 .nodeWrapper {
 	background-color: rgba(0, 0, 0, 0.05);
 	border-left: 1px solid rgba(0, 30, 100, 0.1);
-	padding:0px 8px 0px 0;
+	padding:0px 8px 1px 0px;
 	margin: 4px 0px 4px var(--full-pad);
 }
 
