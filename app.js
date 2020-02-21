@@ -5,6 +5,7 @@ var UI = {
 	documentName: '',
 	startDepth: 1,
 	preserveWhitespace: false,
+	tempTree: false,
 	oneLinerLength: 100,
 	indentChars: '	',
 	separator: '&nbsp;=&nbsp;'
@@ -42,8 +43,8 @@ function load(xml, fname){
 
 function loadContent(){
 	closeAllDialogs();
-	let destination = document.getElementById('wrapper');
-	destination.innerHTML = '';
+	let header = document.getElementById('header');
+	header.innerHTML = '';
 
 	let title = createElem('h1', {id: 'documentName', class: 'saved'});
 	title.innerText = UI.documentName;
@@ -54,7 +55,7 @@ function loadContent(){
 	searchIcon.append('⌕');
 
 	let searchInput = createElem('input', {type: 'text', placeholder: 'Search', id: 'search'});
-	searchInput.onchange = handleSearchInput;
+	searchInput.onkeyup = handleSearchInput;
 	searchInput.onfocus = function(){ this.setAttribute('placeholder', ''); };
 	searchInput.onblur = function(){ this.setAttribute('placeholder', 'Search'); };
 
@@ -67,9 +68,12 @@ function loadContent(){
 	searchWrapper.append(searchInput);
 	searchWrapper.append(searchClear);
 
-	destination.append(title);
-	destination.append(searchWrapper);
-	destination.append(makeTreeNode(UI.XMLDocument.documentElement));
+	header.append(title);
+	header.append(searchWrapper);
+	
+	let tree = document.getElementById('tree');
+	tree.innerHTML = '';
+	tree.append(makeTreeNode(UI.XMLDocument.documentElement));
 }
 
 function loadXMLDocument(inputXML = ''){
