@@ -50,7 +50,8 @@ function loadContent(){
 	document.title = `XMLtagger: ${UI.documentName}`;
 
 	let searchIcon = createElem('div', {class: 'searchIcon'});
-	searchIcon.append('🔎');
+	// searchIcon.append('🔎');
+	searchIcon.append('⌕');
 
 	let searchInput = createElem('input', {type: 'text', placeholder: 'Search', id: 'search'});
 	searchInput.onchange = handleSearchInput;
