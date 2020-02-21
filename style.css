@@ -1,7 +1,18 @@
 :root {
+	--black-20: rgba(0, 0, 0, 0.2);
+	--black-40: rgba(0, 0, 0, 0.4);
+	--black-60: rgba(0, 0, 0, 0.6);
+	--black-80: rgba(0, 0, 0, 0.8);
+
+	--white-10: rgba(255, 255, 255, 0.1);
+	--white-20: rgba(255, 255, 255, 0.2);
+	--white-40: rgba(255, 255, 255, 0.4);
+	--white-60: rgba(255, 255, 255, 0.6);
+	--white-80: rgba(255, 255, 255, 0.8);
+
 	--full-pad: 8px;
 	--half-pad: 4px;
-	--dialog-box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.4);
+	--dialog-box-shadow: 3px 3px 4px var(--black-40);
 
 	--dark-blue-03: hsla(200, 100%, 20%, 0.03);
 	--dark-blue-05: hsla(200, 100%, 20%, 0.05);
@@ -58,7 +69,7 @@ h1 {
 	margin: 0px 0px 0px var(--full-pad);
 	position: relative;
 	top: -4px;
-	border: 1px solid rgba(0, 0, 0, 0.4);
+	border: 1px solid var(--black-40);
 	border-radius: 4px;
 }
 
@@ -117,40 +128,39 @@ h1 {
 	font-weight: bold;
 	margin: 20px;
 	padding: 2px 0px;
-	border: 1px solid rgba(255, 255, 255, 0.7);
+	border: 1px solid var(--white-80);
 	box-shadow: var(--dialog-box-shadow);
 	border-radius: 0px 12px;
 }
 
-#appBar button {
+#appBar button,
+#appBar button:disabled:hover {
 	width: 80%;
-	color: rgba(255, 255, 255, 0.8);
-	background-color: rgba(255, 255, 255, 0.2);
-	border: 1px solid rgba(255, 255, 255, 0.3);
+	color: var(--white-80);
+	background-color: var(--white-20);
+	border: 1px solid var(--white-40);
 	border-radius: 2px;
 	margin: 4px 0px;
 	padding: 4px 0px;
 }
 
-#appBar button:disabled {
-	opacity: 0.2;
-}
-
-#appBar button:disabled:hover {
-	cursor: default;
-}
-
 #appBar button:hover {
 	cursor:pointer;
 	color: white;
-	background-color: rgba(255, 255, 255, 0.15);
-	border: 1px solid rgba(255, 255, 255, 0.5);
+	background-color: var(--white-10);
+	border: 1px solid var(--white-80);
 	border-radius: 4px;
+}
+
+#appBar button:disabled {
+	background-color: var(--white-20);
+	opacity: 0.4;
+	cursor: default;
 }
 
 #appBar hr {
 	margin: 10px 10px;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: var(--white-60);
 	border: 0;
 	height: 1px;
 }
@@ -183,11 +193,11 @@ h1 {
 .togglerTitle:hover {
 	cursor: pointer;
 	color: var(--dark-blue);
-	background-color: var(--dark-blue-10);
+	background-color: var(--dark-blue-05);
 }
 
 .title {
-	color:rgba(0, 0, 0, 0.8);
+	color:var(--black-80);
 	cursor: default;
 	padding: 4px 4px 0px 21px;
 }
@@ -201,8 +211,8 @@ h1 {
 
 .textContent {
 	font-family: monospace;
-	background-color: rgba(255, 255, 255, 0.8);
-	color: rgba(0, 0, 0, 0.8);
+	color: var(--black-80);
+	background-color: var(--white-60);
 	display: inline-block;
 	border: 0px;
 	min-height: 1em;
@@ -230,8 +240,9 @@ h1 {
 .attributeContentActive {
 	display: inline-block;
 	padding: 2px 4px;
-	background-color: rgba(255, 255, 255, 0.4);
-	border: 1px solid rgba(255, 255, 255, 0.8);
+	color: var(--dark-blue-80);
+	background-color: var(--white-20);
+	border: 1px solid var(--white-80);
 	border-radius: 4px;
 	font-size: 0.8em;
 	margin-left: var(--half-pad);
@@ -248,14 +259,15 @@ h1 {
 }
 
 .attributeContent:hover {
-	background-color: rgba(255, 255, 255, 0.6);
+	color: var(--dark-blue-90);
+	background-color: var(--white-80);
 	border: 1px solid white;
 	cursor: pointer;
 }
 
 .attributeContent span,
 .attributeContentActive span {
-	color:rgba(0, 0, 0, 0.3);
+	color:var(--black-40);
 	padding: 0px 4px;
 	font-weight: bold;
 }
@@ -294,8 +306,8 @@ h1 {
 	display: inline-block;
 	margin: 10px 5px 0px 0px;
 	color: var(--dark-blue-80);
-	background-color: var(--dark-blue-20);
-	border: 1px solid var(--dark-blue-30);
+	background-color: var(--dark-blue-10);
+	border: 1px solid var(--dark-blue-40);
 	border-radius: 2px;
 	padding: 4px 20px;
 }
@@ -303,7 +315,7 @@ h1 {
 .dialog button:hover {
 	cursor:pointer;
 	color: var(--dark-blue);
-	background-color: var(--dark-blue-10);
+	background-color: var(--dark-blue-05);
 	border: 1px solid var(--dark-blue-50);
 	border-radius: 4px;
 }
