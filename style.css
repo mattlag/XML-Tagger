@@ -27,6 +27,7 @@
 	--dark-blue-90: hsla(200, 100%, 20%, 0.9);
 	--dark-blue: hsla(200, 100%, 20%, 1.0);
 
+	--highlight: hsl(55, 80%, 80%);
 }
 
 * {
@@ -99,6 +100,17 @@ h1 {
 .searchClear:hover {
 	background-color: var(--dark-blue-40);
 	color: white;
+}
+
+.searchNote {
+	margin: 10px;
+	color: var(--black-60);
+	font-style: italic;
+}
+
+#searchResultCount {
+	position: relative;
+	top: -2px;
 }
 
 #appBar {
@@ -225,12 +237,24 @@ h1 {
 	background-color: white;
 }
 
+.textContent .highlight {
+	background-color: var(--highlight);
+	font-family: monospace;
+}
+
 .commentContent {
 	font-style: italic;
 	font-size: 0.8em;
 	color: forestgreen;
 	text-shadow: 1px 1px 0px white;
 	background-color: transparent;
+}
+
+.commentContent .highlight {
+	background-color: var(--highlight);
+	font-style: italic;
+	color: forestgreen;
+	text-shadow: 1px 1px 0px white;
 }
 
 .textNode {
@@ -257,6 +281,13 @@ h1 {
 	background-color: white;
 	box-shadow: var(--dialog-box-shadow);
 	border: 1px solid var(--dark-blue);
+}
+
+.attributeContent .highlight,
+.attributeContentActive .highlight {
+	background-color: var(--highlight);
+	font-weight: normal;
+	color: var(--dark-blue-90);
 }
 
 .attributeContent:hover {

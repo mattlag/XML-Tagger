@@ -5,7 +5,7 @@ var UI = {
 	documentName: '',
 	startDepth: 1,
 	preserveWhitespace: false,
-	tempTree: false,
+	searchResults: 0,
 	oneLinerLength: 100,
 	indentChars: '	',
 	separator: '&nbsp;=&nbsp;'
@@ -55,7 +55,7 @@ function loadContent(){
 	searchIcon.append('⌕');
 
 	let searchInput = createElem('input', {type: 'text', placeholder: 'Search', id: 'search'});
-	searchInput.onkeyup = handleSearchInput;
+	searchInput.onchange = handleSearchInput;
 	searchInput.onfocus = function(){ this.setAttribute('placeholder', ''); };
 	searchInput.onblur = function(){ this.setAttribute('placeholder', 'Search'); };
 
@@ -68,8 +68,11 @@ function loadContent(){
 	searchWrapper.append(searchInput);
 	searchWrapper.append(searchClear);
 
+	let searchResultCount = createElem('span', {class: 'searchNote', id: 'searchResultCount'});
+
 	header.append(title);
 	header.append(searchWrapper);
+	header.append(searchResultCount);
 	
 	let tree = document.getElementById('tree');
 	tree.innerHTML = '';
