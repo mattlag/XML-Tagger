@@ -1,9 +1,6 @@
 function closeAllDialogs(){
 	let dialogs = document.querySelectorAll('.dialog');
 	if(dialogs.length) dialogs.forEach((d) => removeElem(d));
-	
-	let attrCons = document.querySelectorAll('.attributeContentActive');
-	if(attrCons.length) attrCons.forEach((a) => a.setAttribute('class', 'attributeContent'));
 }
 
 function showAttributeEditDialog(xmlAttribute, domNode){
@@ -12,9 +9,7 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 	let domNodePos = domNode.getBoundingClientRect();
 	let dialog = createElem('div', {class: 'dialog'});
 	dialog.style.top = `${domNodePos.top}px`;
-	dialog.style.left = `${domNodePos.right-1}px`;
-	dialog.style.borderRadius = "0px 4px 4px 4px";
-	dialog.style.textAlign = "center";
+	dialog.style.left = `${domNodePos.left}px`;
 	
 	let input = createElem('textarea');
 	input.innerHTML = xmlAttribute.value;
@@ -35,26 +30,12 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 	cancel.append('cancel');
 	cancel.onclick = closeAllDialogs;
 
-	let mask = createElem('div', {style: `
-		background-color: white;
-		border: 0;
-		width:3px;
-		height:${domNodePos.height-2}px;
-		position:absolute;
-		top:0px;
-		left:-2px;
-	`});
-
 	let footer = createElem('div', {class: 'buttonfooter'});
 	footer.append(confirm);
 	footer.append(cancel);
 
 	dialog.append(input);
 	dialog.append(footer);
-	dialog.append(mask);
-
-	domNode.setAttribute('class', 'attributeContentActive');
-
 	document.body.append(dialog);
 }
 

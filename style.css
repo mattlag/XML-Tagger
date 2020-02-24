@@ -261,8 +261,7 @@ h1 {
 	background-color: transparent;
 }
 
-.attributeContent,
-.attributeContentActive {
+.attributeContent {
 	display: inline-block;
 	padding: 2px 4px;
 	color: var(--dark-blue-80);
@@ -276,15 +275,7 @@ h1 {
 	cursor: default;
 }
 
-.attributeContentActive {
-	border-radius: 4px 0px 0px 4px;
-	background-color: white;
-	box-shadow: var(--dialog-box-shadow);
-	border: 1px solid var(--dark-blue);
-}
-
-.attributeContent .highlight,
-.attributeContentActive .highlight {
+.attributeContent .highlight {
 	background-color: var(--highlight);
 	font-weight: normal;
 	color: var(--dark-blue-90);
@@ -297,8 +288,7 @@ h1 {
 	cursor: pointer;
 }
 
-.attributeContent span,
-.attributeContentActive span {
+.attributeContent span {
 	color:var(--black-40);
 	padding: 0px 4px;
 	font-weight: bold;
