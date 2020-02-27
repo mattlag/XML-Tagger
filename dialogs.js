@@ -3,26 +3,44 @@ function closeAllDialogs(){
 	if(dialogs.length) dialogs.forEach((d) => removeElem(d));
 }
 
-function showAttributeEditDialog(xmlAttribute, domNode){
+function showEditDialog(xmlNode, domNode, newNodeValue){
+	// consolelog(xmlNode);
 	closeAllDialogs();
+
+	let currentValue = xmlNode.value || xmlNode.nodeValue;
 
 	let domNodePos = domNode.getBoundingClientRect();
 	let dialog = createElem('div', {class: 'dialog'});
 	dialog.style.top = `${domNodePos.top}px`;
 	dialog.style.left = `${domNodePos.left}px`;
 	
-	let input = createElem('textarea');
-	input.innerHTML = xmlAttribute.value;
+	let input = createElem('textarea', {id: 'editDialogInput'});
+	input.innerHTML = currentValue;
 	input.style.minWidth = `${domNodePos.width+40}px`;
 	input.style.minHeight = `${domNodePos.height+10}px`;
 
 	let confirm = createElem('button');
 	confirm.append('save');
 	confirm.onclick = function() {
-		if(input.value !== xmlAttribute.value) markProjectAsUnsaved();
-		xmlAttribute.value = escape(input.value);
-		domNode.innerHTML = '';
-		domNode.innerHTML = `${xmlAttribute.name}${UI.separator}${xmlAttribute.value}`;
+		let input = document.getElementById('editDialogInput');
+		if(input.value !== currentValue) markProjectAsUnsaved();
+
+		if(xmlNode.nodeName === "#text") {
+			// Text node
+			xmlNode.data = escape(input.value);
+			domNode.innerHTML = xmlNode.data.replace(/\n/g, '<br>');
+
+		} else if (xmlNode.nodeType === 2){
+			// Attribute value
+			xmlNode.value = escape(input.value);
+			domNode.innerHTML = `${xmlNode.name}${UI.separator}${xmlNode.value}`;
+		
+		} else if (xmlNode.nodeName === '#comment') {
+			// Comment
+			xmlNode.textContent = escape(input.value);
+			domNode.innerHTML = `&lt;!--${xmlNode.textContent}--&gt;`;
+		}
+		
 		closeAllDialogs();
 	};
 
@@ -36,44 +54,6 @@ function showAttributeEditDialog(xmlAttribute, domNode){
 
 	dialog.append(input);
 	dialog.append(footer);
-	document.body.append(dialog);
-}
-
-function showTextEditDialog(xmlAttribute, domNode){
-	closeAllDialogs();
-
-	let domNodePos = domNode.getBoundingClientRect();
-	let dialog = createElem('div', {class: 'dialog'});
-	dialog.style.top = `${domNodePos.top}px`;
-	dialog.style.left = `${domNodePos.left}px`;
-	dialog.style.borderRadius = "0px 0px 4px 4px";
-
-	let input = createElem('textarea');
-	input.innerHTML = xmlAttribute.data.trim();	
-	input.style.minWidth = `${domNodePos.width+40}px`;
-	input.style.minHeight = `${domNodePos.height+40}px`;
-
-	
-	let confirm = createElem('button');
-	confirm.append('save');
-	confirm.onclick = function() {
-		if(input.value !== xmlAttribute.data) markProjectAsUnsaved();
-		xmlAttribute.data = escape(input.value);
-		domNode.innerHTML = xmlAttribute.data.replace(/\n/g, '<br>');
-		closeAllDialogs();
-	};
-	
-	let cancel = createElem('button');
-	cancel.append('cancel');
-	cancel.onclick = closeAllDialogs;
-	
-	let footer = createElem('div', {class: 'buttonfooter'});
-	footer.append(confirm);
-	footer.append(cancel);
-
-	dialog.append(input);
-	dialog.append(footer);
-
 	document.body.append(dialog);
 }
 
@@ -107,10 +87,18 @@ function showLoadFileDialog() {
 
 function markProjectAsUnsaved(){
 	document.getElementById('saveButton').removeAttribute('disabled');
-	document.title = '● ' + document.title;
+	if(document.title.charAt(0) !== '●') document.title = '● ' + document.title;
+	
+	if(!UI.devmode) {
+		window.addEventListener('beforeunload', (e) => {
+			e.preventDefault();
+			e.returnValue = '';
+		});
+	}
 }
 
 function markProjectAsSaved(){
 	document.getElementById('saveButton').setAttribute('disabled', 'disabled');
 	document.title = `XMLtagger: ${UI.documentName}`;
+	if(!UI.devmode) window.removeEventListener('beforeunload');
 }

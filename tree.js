@@ -26,7 +26,7 @@ function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false, filterTerm = f
 				// Search does not return this node
 				return false;
 			} else {
-				consolelog(`Term found in <${thisNode.parentNode.nodeName}>`);
+				// consolelog(`Term found in <${thisNode.parentNode.nodeName}>`);
 			}
 		}
 
@@ -46,7 +46,7 @@ function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false, filterTerm = f
 			content = content.replace(/\n/g, '<br>');
 			elem = createElem('div', {class: 'textContent'});
 			elem.innerHTML = content;
-			elem.onclick = function(event){ event.stopPropagation(); showTextEditDialog(thisNode, elem);};
+			elem.onclick = function(event){ event.stopPropagation(); showEditDialog(thisNode, elem);};
 			node.append(elem);
 			node.setAttribute('class', 'textNode');
 			return node;
@@ -62,7 +62,7 @@ function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false, filterTerm = f
 				// Search does not return this node
 				return false;
 			} else {
-				consolelog(`Term found in <${thisNode.parentNode.nodeName}>`);
+				// consolelog(`Term found in <${thisNode.parentNode.nodeName}>`);
 			}
 		}
 
@@ -77,6 +77,7 @@ function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false, filterTerm = f
 			content = content.replace(/\n/g, '<br>');
 			elem = createElem('div', {class: 'commentContent'});
 			elem.innerHTML = `&lt;!-- ${content} --&gt;`;
+			elem.onclick = function(event){ event.stopPropagation(); showEditDialog(thisNode, elem);};
 			node.append(elem);
 			node.setAttribute('class', 'commentNode');
 			return node;
@@ -109,7 +110,7 @@ function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false, filterTerm = f
 			for(let a=0; a<thisNode.attributes.length; a++){
 				let domNode = createElem('span', {class: 'attributeContent'});
 				let xmlAttribute = thisNode.attributes[a];
-				domNode.onclick = function(event){ event.stopPropagation(); showAttributeEditDialog(xmlAttribute, domNode); };
+				domNode.onclick = function(event){ event.stopPropagation(); showEditDialog(xmlAttribute, domNode); };
 				domNode.setAttribute('title', `Click to edit '${xmlAttribute.name}'`);
 
 				let name = xmlAttribute.name;

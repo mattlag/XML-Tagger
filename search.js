@@ -5,7 +5,7 @@ function handleSearchInput(){
 	let tree = document.getElementById('tree');
 	tree.innerHTML = '';
 	let filteredTree = makeTreeNode(UI.XMLDocument.documentElement, 1, false, term);
-	consolelog(`Search found ${UI.searchResults} results`);
+	// consolelog(`Search found ${UI.searchResults} results`);
 
 	if(filteredTree) {
 		let resultCount = document.getElementById('searchResultCount');

@@ -243,11 +243,20 @@ h1 {
 }
 
 .commentContent {
+	display: inline-block;
 	font-style: italic;
 	font-size: 0.8em;
 	color: forestgreen;
 	text-shadow: 1px 1px 0px white;
 	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.commentContent:hover {
+	cursor: pointer;
+	border: 1px solid var(--white-80);
+	background-color: var(--white-40);
 }
 
 .commentContent .highlight {

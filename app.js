@@ -3,7 +3,7 @@ var UI = {
 	XMLHeader: '',
 	XMLDocument: '',
 	documentName: '',
-	startDepth: 1,
+	startDepth: 2,
 	preserveWhitespace: false,
 	searchResults: 0,
 	oneLinerLength: 100,
