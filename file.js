@@ -38,6 +38,7 @@ function handleDrop(evt) {
 	}
 	
 	removeElem(document.getElementById('fileChooser'));
+	setBGOpacity(true);
 }
 
 function launchOSFileChooser(){

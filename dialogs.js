@@ -1,6 +1,7 @@
 function closeAllDialogs(){
 	let dialogs = document.querySelectorAll('.dialog');
 	if(dialogs.length) dialogs.forEach((d) => removeElem(d));
+	setBGOpacity(true);
 }
 
 function showEditDialog(xmlNode, domNode, newNodeValue){
@@ -38,7 +39,7 @@ function showEditDialog(xmlNode, domNode, newNodeValue){
 		} else if (xmlNode.nodeName === '#comment') {
 			// Comment
 			xmlNode.textContent = escape(input.value);
-			domNode.innerHTML = `&lt;!--${xmlNode.textContent}--&gt;`;
+			domNode.innerHTML = `&lt;!--${xmlNode.textContent.replace(/\n/g, '<br>')}--&gt;`;
 		}
 		
 		closeAllDialogs();
@@ -59,12 +60,17 @@ function showEditDialog(xmlNode, domNode, newNodeValue){
 
 function showLoadFileDialog() {
 	closeAllDialogs();
+	setBGOpacity(false);
 
 	let dialog = createElem('div', {class: 'dialog'});
+	let bodyRect = document.body.getClientRects()[0];
+	let width = 500;
+	let height = 300;
 
-	dialog.style.width = '400px';
-	dialog.style.left = "118px";
-	dialog.style.top = "10px";
+	dialog.style.width = `${width}px`;
+	dialog.style.height = `${height}px`;
+	dialog.style.left = `${(bodyRect.width / 2) - (width / 2)}px`;
+	dialog.style.top = `${(bodyRect.height / 2) - (height / 2)}px`;
 
 	let wrapper = createElem('div', {class: 'content'});
 	wrapper.innerHTML = `
@@ -89,16 +95,21 @@ function markProjectAsUnsaved(){
 	document.getElementById('saveButton').removeAttribute('disabled');
 	if(document.title.charAt(0) !== '●') document.title = '● ' + document.title;
 	
-	if(!UI.devmode) {
-		window.addEventListener('beforeunload', (e) => {
-			e.preventDefault();
-			e.returnValue = '';
-		});
-	}
+	if(!UI.devmode) window.addEventListener('beforeunload', handleBeforeUnload, true);
+}
+
+function handleBeforeUnload(event) {
+	event.preventDefault();
+	event.returnValue = '';
 }
 
 function markProjectAsSaved(){
 	document.getElementById('saveButton').setAttribute('disabled', 'disabled');
 	document.title = `XMLtagger: ${UI.documentName}`;
-	if(!UI.devmode) window.removeEventListener('beforeunload');
+	if(!UI.devmode) window.removeEventListener('beforeunload', handleBeforeUnload, true);
+}
+
+function setBGOpacity(opacity = false) {
+	document.getElementById('appBar').style.opacity = opacity? '1.0' : '0.2';
+	document.getElementById('wrapper').style.opacity = opacity? '1.0' : '0.3';
 }

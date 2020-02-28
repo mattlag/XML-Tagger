@@ -374,6 +374,7 @@ h1 {
 	border-radius: 10px;
 	color: var(--dark-blue-70);
 	margin: 20px 0px 0px 0px;
-	padding: 30px 0px;
+	padding: 70px 0px;
 	text-align: center;
+	height: 155px;
 }

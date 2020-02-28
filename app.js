@@ -1,5 +1,5 @@
 var UI = {
-	devmode: true,
+	devmode: false,
 	XMLHeader: '',
 	XMLDocument: '',
 	documentName: '',
