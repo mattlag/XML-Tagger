@@ -35,9 +35,7 @@ function handleDrop(evt) {
 		reader.onload = function() {
 			load(reader.result.trim(), f.name);
 			setBGOpacity(true);
-			document.getElementById('expandButton').removeAttribute('disabled');
-			document.getElementById('collapseButton').removeAttribute('disabled');
-			document.getElementById('exportJSONButton').removeAttribute('disabled');
+			enableDocButtons();
 		};
 		reader.readAsText(f);
 		target.innerHTML = 'loading...';
@@ -52,6 +50,12 @@ function handleDrop(evt) {
 function disableDrop(event){
 	event.preventDefault();
 	event.stopPropagation();
+}
+
+function enableDocButtons(){
+	document.getElementById('expandButton').removeAttribute('disabled');
+	document.getElementById('collapseButton').removeAttribute('disabled');
+	document.getElementById('exportJSONButton').removeAttribute('disabled');
 }
 
 function launchOSFileChooser(){

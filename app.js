@@ -13,8 +13,9 @@ var UI = {
 };
 
 function main() {
-	if(UI.devmode && UI.devload) {
+	if(UI.devload) {
 		load(testXML, 'test-xml-document.xml');
+		enableDocButtons();
 	} else {
 		showLoadFileDialog();
 	}
