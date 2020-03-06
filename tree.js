@@ -1,5 +1,5 @@
 
-function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false, filterTerm = false) {
+function makeTreeNode(thisNode, depth = 1, hasNoSiblings = false, filterTerm = false){
 	// consolelog(`makeTreeNode ${thisNode.nodeName}`);
 	let node = createElem('div', {class: 'nodeWrapper'});
 	node.onclick = closeAllDialogs;
@@ -189,12 +189,12 @@ function collapse(node){
 	}
 }
 
-function expandAll() {
+function expandAll(){
 	closeAllDialogs();
 	document.querySelectorAll('.togglerTitle').forEach((node) => expand(node));
 }
 
-function collapseAll() {
+function collapseAll(){
 	closeAllDialogs();
 	document.querySelectorAll('.togglerTitle').forEach((node) => collapse(node));
 }

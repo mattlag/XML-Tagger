@@ -7,18 +7,21 @@ function XMLtoJSON(XMLdoc){
 	};
 
 	function tag_getContent(parent) {
-		var kids = parent.childNodes;
-		// log('\nTAG: ' + parent.nodeName + '\t' + parent.childNodes.length);
+		let kids = parent.childNodes;
+		// consolelog('\nTAG: ' + parent.nodeName + '\t' + parent.childNodes.length);
 
 		if(kids.length === 0) return jsonTrim(parent.nodeValue);
 
-		var result = [];
-		var node, tagresult, tagcontent, tagattributes;
+		let result = [];
+		let node;
+		let tagresult;
+		let tagcontent;
+		let tagattributes;
 
-		for(var k=0; k<kids.length; k++){
+		for(let k=0; k<kids.length; k++){
 			tagresult = {};
 			node = kids[k];
-			// log('\n\t>>START kid ' + k + ' ' + node.nodeName);
+			// consolelog('\n\t>>START kid ' + k + ' ' + node.nodeName);
 			if(node.nodeName === '#comment') break;
 
 			tagcontent = tag_getContent(node);
@@ -34,7 +37,7 @@ function XMLtoJSON(XMLdoc){
 
 			if(tagresult !== '') result.push(tagresult);
 
-			// log('\t>>END kid ' + k);
+			// consolelog('\t>>END kid ' + k);
 		}
 
 		return result;
@@ -43,15 +46,15 @@ function XMLtoJSON(XMLdoc){
 	function tag_getAttributes(attributes) {
 		if(!attributes || !attributes.length) return {};
 
-		// log('\t\t tag_getAttributes:');
-		// log(attributes);
+		// consolelog('\t\t tag_getAttributes:');
+		// consolelog(attributes);
 
-		var result = {};
-		var attr;
+		let result = {};
+		let attr;
 
 		for(var a=0; a<attributes.length; a++){
 			attr = attributes[a];
-			// log('\t\t'+attr.name+' : '+attr.value);
+			// consolelog('\t\t'+attr.name+' : '+attr.value);
 			result[attr.name] = jsonTrim(attr.value);
 		}
 

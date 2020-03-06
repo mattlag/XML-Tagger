@@ -22,7 +22,7 @@ function showEditDialog(xmlNode, domNode, newNodeValue){
 
 	let confirm = createElem('button');
 	confirm.append('save');
-	confirm.onclick = function() {
+	confirm.onclick = function(){
 		let input = document.getElementById('editDialogInput');
 		if(input.value !== currentValue) markProjectAsUnsaved();
 
@@ -58,7 +58,7 @@ function showEditDialog(xmlNode, domNode, newNodeValue){
 	document.body.append(dialog);
 }
 
-function showLoadFileDialog() {
+function showLoadFileDialog(){
 	closeAllDialogs();
 	setBGOpacity(false);
 

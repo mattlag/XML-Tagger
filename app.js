@@ -12,7 +12,7 @@ var UI = {
 	separator: '&nbsp;=&nbsp;'
 };
 
-function main() {
+function main(){
 	if(UI.devload) {
 		load(testXML, 'test-xml-document.xml');
 		enableDocButtons();

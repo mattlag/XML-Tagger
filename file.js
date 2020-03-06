@@ -13,7 +13,7 @@ function handleDragLeave(evt){
 	target.innerHTML = 'drop a file here';
 }
 
-function handleDrop(evt) {
+function handleDrop(evt){
 	consolelog(`handleDrop - start`);
 	consolelog(evt);
 
@@ -124,7 +124,7 @@ function generateFormattedTextFromDOMNode(node, level = 0){
 	return content;
 }
 
-function downloadXMLFile() {
+function downloadXMLFile(){
 	let content = UI.XMLHeader || '<?xml version="1.0" encoding="UTF-8"?>\n';
 	content += generateFormattedTextFromDOMNode(UI.XMLDocument.documentElement);
 
@@ -132,7 +132,7 @@ function downloadXMLFile() {
 	markProjectAsSaved();
 }
 
-function exportJSONFile() {
+function exportJSONFile(){
 	let jsonResult = XMLtoJSON(UI.XMLDocument);
 	jsonResult = JSON.stringify(jsonResult, null, UI.indentChars);
 
