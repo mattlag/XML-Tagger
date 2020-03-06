@@ -92,7 +92,7 @@ function showLoadFileDialog() {
 }
 
 function markProjectAsUnsaved(){
-	document.getElementById('saveButton').removeAttribute('disabled');
+	document.getElementById('saveXMLButton').removeAttribute('disabled');
 	if(document.title.charAt(0) !== '●') document.title = '● ' + document.title;
 	
 	if(!UI.devmode) window.addEventListener('beforeunload', handleBeforeUnload, true);
@@ -104,7 +104,7 @@ function handleBeforeUnload(event) {
 }
 
 function markProjectAsSaved(){
-	document.getElementById('saveButton').setAttribute('disabled', 'disabled');
+	document.getElementById('saveXMLButton').setAttribute('disabled', 'disabled');
 	document.title = `XMLtagger: ${UI.documentName}`;
 	if(!UI.devmode) window.removeEventListener('beforeunload', handleBeforeUnload, true);
 }

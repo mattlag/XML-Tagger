@@ -48,7 +48,7 @@ html, body {
 
 body {
 	display: grid;
-	grid-template-columns: 100px 1fr;
+	grid-template-columns: 150px 1fr;
 	gap: 10px;
 	max-height: 100%;
 	overflow: hidden;
@@ -133,13 +133,15 @@ h1 {
 }
 
 .logo {
+	display: inline-block;
+	width: 80%;
 	background-color: var(--dark-blue);
 	font-size: 24px;
 	line-height: 0.9em;
 	text-align: center;
 	font-weight: bold;
-	margin: 15px 20px 20px 20px;
-	padding: 2px 0px;
+	margin: 12px auto 20px auto;
+	padding: 10px 0px;
 	border: 1px solid var(--white-80);
 	box-shadow: var(--dialog-box-shadow);
 	border-radius: 0px 12px;
@@ -377,4 +379,11 @@ h1 {
 	padding: 70px 0px;
 	text-align: center;
 	height: 155px;
+}
+
+.warn {
+	padding: 10px 15px;
+	border-radius: 4px;
+	background-color: hsla(55, 100%, 50%, 0.4);
+	color: hsl(0, 90%, 30%);
 }

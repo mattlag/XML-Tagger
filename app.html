@@ -10,19 +10,23 @@
 	<script src="dialogs.js"></script>
 	<script src="file.js"></script>
 	<script src="search.js"></script>
+	<script src="XMLtoJSON.js"></script>
 	<script src="testXML.js"></script>
 	<link rel="stylesheet" href="style.css"/>
 </head>
 <body onload='main();' ondrop="disableDrop(event);">
 	<div id="appBar">
 		<div class="logo">
-			XML<br>T&#xfeff;AG<br>GER
+			<!-- XML<br>T&#xfeff;AG<br>GER -->
+			XML<br>T&#xfeff;AGGER
 		</div>
-		<button onclick="expandAll();">Expand All</button>
-		<button onclick="collapseAll();">Collapse All</button>
-		<hr>
 		<button onclick="showLoadFileDialog();">Load file</button>
-		<button onclick="downloadFile();" disabled id="saveButton">Save file</button>
+		<hr>
+		<button onclick="expandAll();" disabled id="expandButton">Expand All</button>
+		<button onclick="collapseAll();" disabled id="collapseButton">Collapse All</button>
+		<hr>
+		<button onclick="downloadXMLFile();" disabled id="saveXMLButton">Save XML</button>
+		<button onclick="exportJSONFile();" disabled id="exportJSONButton">Export JSON</button>
 	</div>
 	<div id="wrapper" onscroll="closeAllDialogs();" onclick="closeAllDialogs();">
 		<div id="header">

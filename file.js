@@ -14,10 +14,17 @@ function handleDragLeave(evt){
 }
 
 function handleDrop(evt) {
+	consolelog(`handleDrop - start`);
+	consolelog(evt);
+
 	evt.preventDefault();
 
 	let f = evt.dataTransfer || document.getElementById('fileChooser');
 	f = f.files[0];
+
+	consolelog(`handleDrop for ${f.name}`);
+
+	removeElem(document.getElementById('fileChooser'));
 	let fname = f.name.split('.');
 	fname = fname[fname.length-1].toLowerCase();
 	let target = document.getElementById('dropTarget');
@@ -27,18 +34,24 @@ function handleDrop(evt) {
 	if (fname === 'xml' || fname === 'svg'){
 		reader.onload = function() {
 			load(reader.result.trim(), f.name);
+			setBGOpacity(true);
+			document.getElementById('expandButton').removeAttribute('disabled');
+			document.getElementById('collapseButton').removeAttribute('disabled');
+			document.getElementById('exportJSONButton').removeAttribute('disabled');
 		};
 		reader.readAsText(f);
 		target.innerHTML = 'loading...';
 	} else {
-		target.innerHTML = 'please drop a .xml or .svg file';
-		document.setTimeout(() => {
+		target.innerHTML = '<span class="warn">please drop a .xml or .svg file!</span>';
+		window.setTimeout(() => {
 			target.innerHTML = 'drop a file here';
-		}, 1000);
+		}, 3000);
 	}
-	
-	removeElem(document.getElementById('fileChooser'));
-	setBGOpacity(true);
+}
+
+function disableDrop(event){
+	event.preventDefault();
+	event.stopPropagation();
 }
 
 function launchOSFileChooser(){
@@ -107,13 +120,27 @@ function generateFormattedTextFromDOMNode(node, level = 0){
 	return content;
 }
 
-function downloadFile() {
+function downloadXMLFile() {
 	let content = UI.XMLHeader || '<?xml version="1.0" encoding="UTF-8"?>\n';
 	content += generateFormattedTextFromDOMNode(UI.XMLDocument.documentElement);
 
+	saveFile(content);
+	markProjectAsSaved();
+}
+
+function exportJSONFile() {
+	let jsonResult = XMLtoJSON(UI.XMLDocument);
+	jsonResult = JSON.stringify(jsonResult, null, UI.indentChars);
+
+	saveFile(jsonResult, true);
+}
+
+function saveFile(content, isJSON = false){
 	let ftype = 'text/plain;charset=utf-8';
 	let fblob = new Blob([content], {'type':ftype, 'endings':'native'});
 	let fname = UI.documentName;
+
+	if(isJSON) fname = `${fname}.json`;
 
 	let link = createElem('a');
 	window.URL = window.URL || window.webkitURL;
@@ -124,11 +151,5 @@ function downloadFile() {
 	event.initEvent('click', true, false);
 	link.dispatchEvent(event);
 
-	markProjectAsSaved();
 	return;
-}
-
-function disableDrop(event){
-	event.preventDefault();
-	event.stopPropagation();
 }

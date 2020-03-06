@@ -1,5 +1,6 @@
 var UI = {
 	devmode: false,
+	devload: false,
 	XMLHeader: '',
 	XMLDocument: '',
 	documentName: '',
@@ -11,9 +12,8 @@ var UI = {
 	separator: '&nbsp;=&nbsp;'
 };
 
-
 function main() {
-	if(UI.devmode) {
+	if(UI.devmode && UI.devload) {
 		load(testXML, 'test-xml-document.xml');
 	} else {
 		showLoadFileDialog();
@@ -31,7 +31,7 @@ function load(xml, fname){
 	
 	UI.XMLDocument = loadXMLDocument(loadXML);
 	consolelog(UI.XMLDocument);
-	
+
 	UI.documentName = fname;
 
 	let firstTagName = `<${UI.XMLDocument.firstElementChild.tagName}`;
