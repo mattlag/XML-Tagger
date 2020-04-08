@@ -15,3 +15,12 @@ You can play with it live here: [mattlag.com/xmltagger](https://www.mattlag.com/
  - Change the order of tags
  - Compare two XML files
  - *another idea? let me know! matt@mattlag.com*
+
+## License
+Copyright (C) 2020 Matthew LaGrandeur, released under [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0-standalone.html)
+
+## Author
+| ![Matthew LaGrandeur's picture](https://1.gravatar.com/avatar/f6f7b963adc54db7e713d7bd5f4903ec?s=70) |
+|---|
+| [Matthew LaGrandeur](http://mattlag.com/) |
+| matt[at]mattlag[dot]com |
